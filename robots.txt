@@ -7,6 +7,7 @@ Allow: /index.html
 Allow: /abs.html
 Allow: /register.html
 Allow: /login.html
+Allow: /sitemap.html
 Allow: /css/
 Allow: /image/
 Allow: /js/
@@ -44,5 +45,5 @@ User-agent: Applebot
 Allow: /
 
 # Sitemaps for Search Engine Indexation
-Sitemap: https://localhost:8443/sitemap.xml
-Sitemap: http://localhost:8080/sitemap.xml
+Sitemap: https://ksomesha13-cpu.github.io/bloodbank-lifeflow/sitemap.xml
+Sitemap: https://ksomesha13-cpu.github.io/bloodbank-lifeflow/sitemap.xml

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <!-- SEO Meta Tags -->
+    <title>Available Blood Inventory &amp; Live Hospital Stock | LifeFlow</title>
+    <meta name="description" content="Search real-time blood stock across partner hospitals by blood group (A+, A-, B+, B-, AB+, AB-, O+, O-) and city. Submit urgent clinical requisitions online." />
+    <meta name="keywords" content="find blood, blood inventory, hospital blood stock, O+ blood, A+ blood, B+ blood, AB+ blood, rare blood groups, blood request online, emergency blood search" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://localhost:8443/abs.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Available Blood Inventory &amp; Live Hospital Stock | LifeFlow" />
+    <meta property="og:description" content="Search real-time blood units across partner hospitals. Fast emergency requisition matching." />
+    <meta property="og:url" content="https://localhost:8443/abs.html" />
+    <meta property="og:image" content="https://localhost:8443/image/hospital1.jpg" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="css/style.css" rel="stylesheet"/>
+    <link rel="shortcut icon" type="image/jpeg" href="image/favicon.jpg">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav id="mainNav" class="navbar navbar-expand-sm navbar-light bg-light sticky-top shadow-sm"></nav>
+
+    <div class="container cont">
+        <!-- Message Container -->
+        <div id="message-container"></div>
+
+        <!-- Search Bar Section -->
+        <div class="card shadow-sm mb-4 border-0 bg-light">
+            <div class="card-body p-4">
+                <h4 class="font-weight-bold text-dark mb-3">
+                    <i class="fas fa-search-location text-danger mr-2"></i>Find Available Blood Across Partner Hospitals
+                </h4>
+                <form id="searchForm">
+                    <div class="form-row align-items-end">
+                        <div class="col-md-5 mb-2">
+                            <label class="font-weight-bold small text-muted">Select Blood Group:</label>
+                            <select id="searchSelect" class="form-control form-control-lg">
+                                <option value="">All Blood Groups</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label class="font-weight-bold small text-muted">Filter by City or Hospital:</label>
+                            <input type="text" id="searchCity" class="form-control form-control-lg" placeholder="e.g. Delhi, Mumbai, Apollo">
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <button type="submit" class="btn btn-danger btn-lg btn-block font-weight-bold">
+                                <i class="fas fa-search mr-1"></i> Search Stock
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="noDataAlert" class="mb-4 text-center" style="display: none;">
+            <div class="alert alert-warning py-3">
+                <i class="fas fa-exclamation-circle mr-2"></i>No matching blood stock found. Try selecting another blood group or clearing the city filter.
+            </div>
+        </div>
+
+        <!-- Blood Samples Table -->
+        <div class="card shadow-sm border-0 mb-5">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 font-weight-bold text-dark"><i class="fas fa-tint text-danger mr-2"></i>Available Blood Inventory</h5>
+                <span class="badge badge-light border" id="resultCountBadge">Showing all</span>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped mb-0 text-center">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Hospital Name</th>
+                                <th>City</th>
+                                <th>Contact Information</th>
+                                <th>Blood Group</th>
+                                <th>Available Stock</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="samplesTableBody">
+                            <!-- Dynamically populated -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REQUEST BLOOD SAMPLE MODAL -->
+    <div class="modal fade" id="requestModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title font-weight-bold"><i class="fas fa-heartbeat mr-2"></i>Submit Blood Requisition</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                </div>
+                <form id="submitRequestForm">
+                    <input type="hidden" id="reqModalHid">
+                    <input type="hidden" id="reqModalBg">
+                    <div class="modal-body">
+                        <div class="alert alert-info py-2 small mb-3">
+                            Requesting Blood Group: <strong id="reqModalBgDisplay" class="badge badge-danger"></strong> from <strong id="reqModalHnameDisplay"></strong>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold small text-muted">Required Units (Bags) *</label>
+                            <input type="number" id="reqModalUnits" class="form-control" value="1" min="1" max="10" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold small text-muted">Urgency Level *</label>
+                            <select id="reqModalUrgency" class="form-control" required>
+                                <option value="Normal">Normal (Within 24 Hours)</option>
+                                <option value="Urgent">Urgent (Within 6 Hours)</option>
+                                <option value="Emergency">Critical Emergency (Immediate)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold small text-muted">Patient / Clinical Reason *</label>
+                            <textarea id="reqModalReason" class="form-control" rows="3" placeholder="Provide patient diagnosis, surgery type, or physician note" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger font-weight-bold">Confirm &amp; Send Request</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center bg-light">
+        © Copyright <span id="yearSpan"></span> <span class="brand text-danger font-weight-bold">LifeFlow Blood Bank. </span> All Rights Reserved.
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+    <script src="js/security.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        BloodBank.initNavbar('abs');
+        BloodBank.initMessages();
+        BloodBank.initFooter();
+
+        function renderSamples(filterBg = '', filterCity = '') {
+            const db = BloodBank.getDB();
+            const session = BloodBank.getSession();
+            const tbody = document.getElementById('samplesTableBody');
+            const noData = document.getElementById('noDataAlert');
+            const countBadge = document.getElementById('resultCountBadge');
+
+            // Join bloodinfo and hospitals
+            let list = [];
+            db.bloodinfo.forEach(item => {
+                const hospital = db.hospitals.find(h => h.id === item.hid);
+                if (hospital) {
+                    list.push({
+                        bid: item.bid,
+                        hid: hospital.id,
+                        hname: hospital.hname,
+                        hcity: hospital.hcity,
+                        hemail: hospital.hemail,
+                        hphone: hospital.hphone,
+                        address: hospital.address || '',
+                        bg: item.bg,
+                        units: parseInt(item.units) || 5
+                    });
+                }
+            });
+
+            if (filterBg) {
+                list = list.filter(item => item.bg.toLowerCase() === filterBg.toLowerCase());
+            }
+
+            if (filterCity) {
+                const query = filterCity.toLowerCase();
+                list = list.filter(item => 
+                    item.hcity.toLowerCase().includes(query) || 
+                    item.hname.toLowerCase().includes(query)
+                );
+            }
+
+            countBadge.textContent = list.length + ' blood stock records';
+
+            if (list.length === 0) {
+                tbody.innerHTML = '';
+                noData.style.display = 'block';
+                return;
+            }
+
+            noData.style.display = 'none';
+            tbody.innerHTML = list.map((item, index) => {
+                let actionBtn = '';
+                if (session && session.type === 'hospital') {
+                    actionBtn = `<button class="btn btn-secondary btn-sm" onclick="alert('Hospital accounts cannot request blood. Only Receivers can request.')">Hospital Account</button>`;
+                } else if (session && session.type === 'receiver') {
+                    actionBtn = `<button class="btn btn-danger btn-sm font-weight-bold" onclick="openRequestModal(${item.hid}, '${item.bg}', '${item.hname.replace(/'/g, "\\'")}')"><i class="fas fa-paper-plane mr-1"></i> Request Blood</button>`;
+                } else {
+                    actionBtn = `<button class="btn btn-danger btn-sm" onclick="handleGuestClick()"><i class="fas fa-sign-in-alt mr-1"></i> Login to Request</button>`;
+                }
+
+                const stockBadge = item.units > 8 ? 'badge-success' : item.units > 2 ? 'badge-primary' : 'badge-warning';
+
+                return `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td class="font-weight-bold text-left">
+                            ${BloodBank.escapeHtml(item.hname)}
+                            ${item.address ? `<div class="small text-muted">${BloodBank.escapeHtml(item.address)}</div>` : ''}
+                        </td>
+                        <td><span class="badge badge-light border">${BloodBank.escapeHtml(item.hcity)}</span></td>
+                        <td class="small">
+                            <div><i class="fas fa-phone mr-1 text-muted"></i> ${BloodBank.escapeHtml(item.hphone)}</div>
+                            <div><i class="fas fa-envelope mr-1 text-muted"></i> <a href="mailto:${BloodBank.escapeHtml(item.hemail)}">${BloodBank.escapeHtml(item.hemail)}</a></div>
+                        </td>
+                        <td><span class="badge badge-danger px-3 py-1 font-weight-bold" style="font-size:1rem;">${BloodBank.escapeHtml(item.bg)}</span></td>
+                        <td><span class="badge ${stockBadge} px-2 py-1 font-weight-bold">${item.units} Units</span></td>
+                        <td>${actionBtn}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function handleGuestClick() {
+            alert("Please login as a Receiver to submit blood requests.");
+            window.location.href = 'login.html';
+        }
+
+        function openRequestModal(hid, bg, hname) {
+            document.getElementById('reqModalHid').value = hid;
+            document.getElementById('reqModalBg').value = bg;
+            document.getElementById('reqModalBgDisplay').textContent = bg;
+            document.getElementById('reqModalHnameDisplay').textContent = hname;
+            document.getElementById('reqModalUnits').value = '1';
+            document.getElementById('reqModalReason').value = '';
+            $('#requestModal').modal('show');
+        }
+
+        // Handle Request Submission
+        document.getElementById('submitRequestForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const session = BloodBank.getSession();
+            if (!session || session.type !== 'receiver') {
+                handleGuestClick();
+                return;
+            }
+
+            const hid = parseInt(document.getElementById('reqModalHid').value);
+            const bg = document.getElementById('reqModalBg').value;
+            const units = parseInt(document.getElementById('reqModalUnits').value) || 1;
+            const urgency = document.getElementById('reqModalUrgency').value;
+            const reasonRaw = document.getElementById('reqModalReason').value.trim();
+
+            // Background WAF Inspection
+            const inspection = CyberSecurity.inspectInput(reasonRaw, 'blood_requisition_reason', session.email);
+            if (!inspection.safe) {
+                BloodBank.showBanner(inspection.reason, true);
+                return;
+            }
+            const reason = inspection.sanitized;
+
+            const db = BloodBank.getDB();
+            const newReqId = db.bloodrequest.length > 0 ? Math.max(...db.bloodrequest.map(r => r.reqid)) + 1 : 1;
+
+            db.bloodrequest.push({
+                reqid: newReqId,
+                hid: hid,
+                rid: session.id,
+                bg: bg,
+                units: units,
+                urgency: urgency,
+                reason: reason,
+                reqDate: new Date().toISOString().slice(0, 10),
+                status: 'Pending'
+            });
+
+            BloodBank.saveDB(db);
+            $('#requestModal').modal('hide');
+            window.location.href = 'sentrequest.html?msg=' + encodeURIComponent('Your requisition for ' + units + ' units of ' + bg + ' blood (' + urgency + ') has been dispatched!');
+        });
+
+        // Search Form Submission
+        document.getElementById('searchForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const bg = document.getElementById('searchSelect').value;
+            const city = document.getElementById('searchCity').value.trim();
+            renderSamples(bg, city);
+        });
+
+        // Initialize with URL param if any
+        const params = BloodBank.getUrlParams();
+        if (params.search || params.city) {
+            if (params.search) document.getElementById('searchSelect').value = params.search;
+            if (params.city) document.getElementById('searchCity').value = params.city;
+            renderSamples(params.search || '', params.city || '');
+        } else {
+            renderSamples();
+        }
+    </script>
+</body>
+</html>

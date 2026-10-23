@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <!-- Primary Homepage -->
+  <url>
+    <loc>https://localhost:8443/index.html</loc>
+    <lastmod>2026-10-23T22:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.00</priority>
+    <image:image>
+      <image:loc>https://localhost:8443/image/hospital1.jpg</image:loc>
+      <image:title>LifeFlow Universal Blood Bank Network</image:title>
+      <image:caption>Connecting voluntary donors and emergency hospital blood supplies</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Live Available Blood Samples Directory -->
+  <url>
+    <loc>https://localhost:8443/abs.html</loc>
+    <lastmod>2026-10-23T22:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- Donor & Hospital Registration Portal -->
+  <url>
+    <loc>https://localhost:8443/register.html</loc>
+    <lastmod>2026-10-23T22:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Portal Authentication Access -->
+  <url>
+    <loc>https://localhost:8443/login.html</loc>
+    <lastmod>2026-10-23T22:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+</urlset>

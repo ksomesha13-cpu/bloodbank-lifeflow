@@ -1,0 +1,48 @@
+# LifeFlow Blood Bank Network - Search Engine Crawler Directives
+# Optimized for Googlebot, Bingbot, Slurp (Yahoo), DuckDuckBot, Baiduspider, YandexBot, Applebot
+
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /abs.html
+Allow: /register.html
+Allow: /login.html
+Allow: /css/
+Allow: /image/
+Allow: /js/
+
+# Restrict Private Administration & Sensitive Backend Folders
+Disallow: /admin.html
+Disallow: /hprofile.html
+Disallow: /rprofile.html
+Disallow: /bloodinfo.html
+Disallow: /bloodrequest.html
+Disallow: /sentrequest.html
+Disallow: /ssl/
+Disallow: /__pycache__/
+
+# Search Engine Specific Directives
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# Sitemaps for Search Engine Indexation
+Sitemap: https://localhost:8443/sitemap.xml
+Sitemap: http://localhost:8080/sitemap.xml

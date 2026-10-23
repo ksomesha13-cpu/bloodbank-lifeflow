@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bloodbank | Hospital Profile</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="css/style.css" rel="stylesheet"/>
+    <link rel="shortcut icon" type="image/jpeg" href="image/favicon.jpg">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav id="mainNav" class="navbar navbar-expand-sm navbar-light bg-light sticky-top"></nav>
+
+    <div class="container cont">
+        <!-- Message Container -->
+        <div id="message-container"></div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-6 col-sm-8 mb-5">
+                <div class="card shadow-sm">
+                    <div class="text-center pt-4">
+                        <img src="image/hospital.png" alt="Hospital Profile Picture" class="rounded-circle shadow-sm" width="80" height="80">
+                        <h4 class="mt-2 font-weight-bold" id="profileHeading">Hospital Profile</h4>
+                    </div>
+                    <div class="card-body px-4">
+                        <form id="hprofileForm">
+                            <label class="text-muted font-weight-bold">Hospital Name</label>
+                            <input type="text" id="profHname" class="form-control mb-3" required>
+
+                            <label class="text-muted font-weight-bold">Hospital Email</label>
+                            <input type="email" id="profHemail" class="form-control mb-3" required>
+
+                            <label class="text-muted font-weight-bold">Hospital Password</label>
+                            <input type="text" id="profHpassword" class="form-control mb-3" required>
+
+                            <label class="text-muted font-weight-bold">Hospital Phone Number</label>
+                            <input type="text" id="profHphone" class="form-control mb-3" required>
+
+                            <label class="text-muted font-weight-bold">Hospital City</label>
+                            <input type="text" id="profHcity" class="form-control mb-4" required>
+
+                            <button type="submit" class="btn btn-block btn-primary mb-3">Update Profile</button>
+                        </form>
+                    </div>
+                    <div class="text-center pb-4">
+                        <a href="index.html" class="text-secondary font-weight-bold">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center bg-light">
+        © Copyright <span id="yearSpan"></span> <span class="brand">Blood Bank. </span> All Rights Reserved.
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+    <script src="js/security.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Guard: Hospital access only
+        const session = BloodBank.getSession();
+        if (!session || session.type !== 'hospital') {
+            alert('Please login as a Hospital to access this page.');
+            window.location.href = 'login.html';
+        }
+
+        BloodBank.initNavbar('hprofile');
+        BloodBank.initMessages();
+        BloodBank.initFooter();
+
+        function loadProfile() {
+            const db = BloodBank.getDB();
+            const hospital = db.hospitals.find(h => h.id === session.id);
+            if (!hospital) {
+                alert('Hospital profile not found.');
+                BloodBank.logout();
+                return;
+            }
+
+            document.getElementById('profileHeading').textContent = hospital.hname;
+            document.getElementById('profHname').value = hospital.hname || '';
+            document.getElementById('profHemail').value = hospital.hemail || '';
+            document.getElementById('profHpassword').value = hospital.hpassword || '';
+            document.getElementById('profHphone').value = hospital.hphone || '';
+            document.getElementById('profHcity').value = hospital.hcity || '';
+        }
+
+        document.getElementById('hprofileForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const hname = document.getElementById('profHname').value.trim();
+            const hemail = document.getElementById('profHemail').value.trim();
+            const hpassword = document.getElementById('profHpassword').value;
+            const hphone = document.getElementById('profHphone').value.trim();
+            const hcity = document.getElementById('profHcity').value.trim();
+
+            const db = BloodBank.getDB();
+            const hospital = db.hospitals.find(h => h.id === session.id);
+            if (hospital) {
+                hospital.hname = hname;
+                hospital.hemail = hemail;
+                hospital.hpassword = hpassword;
+                hospital.hphone = hphone;
+                hospital.hcity = hcity;
+                BloodBank.saveDB(db);
+
+                // Update active session name
+                session.name = hname;
+                session.email = hemail;
+                BloodBank.setSession(session);
+
+                BloodBank.showBanner("Your profile is updated successfully.");
+                BloodBank.initNavbar('hprofile');
+                document.getElementById('profileHeading').textContent = hname;
+            }
+        });
+
+        loadProfile();
+    </script>
+</body>
+</html>

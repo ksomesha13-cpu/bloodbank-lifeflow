@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <!-- Search Engine Primary Title & Meta Tags -->
+    <title>LifeFlow | Universal Blood Bank Network - Find Blood Donors & Real-Time Hospital Stock</title>
+    <meta name="description" content="Find available blood units (A+, B+, O+, AB+, rare groups) across partner hospitals in real time. Register as a voluntary blood donor or submit urgent clinical blood requisitions." />
+    <meta name="keywords" content="blood bank, find blood, donate blood, blood donors near me, emergency blood bank, hospital blood stock, O positive blood, B positive blood, blood compatibility, voluntary blood donation, life flow blood bank" />
+    <meta name="author" content="LifeFlow Healthcare Network" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="https://localhost:8443/index.html" />
+
+    <!-- Open Graph (Facebook, LinkedIn, WhatsApp Link Previews) -->
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="LifeFlow Blood Bank Network" />
+    <meta property="og:title" content="LifeFlow | Universal Blood Bank Network - Find Blood Donors & Hospital Stock" />
+    <meta property="og:description" content="Real-time coordinated digital blood supply network connecting hospitals, voluntary donors, and emergency recipients across cities." />
+    <meta property="og:url" content="https://localhost:8443/index.html" />
+    <meta property="og:image" content="https://localhost:8443/image/hospital1.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="LifeFlow | Universal Blood Bank Network" />
+    <meta name="twitter:description" content="Connecting every drop to someone in need. Real-time blood inventory, voluntary donor matching, and emergency dispatch." />
+    <meta name="twitter:image" content="https://localhost:8443/image/hospital1.jpg" />
+
+    <!-- Search Engine Webmaster Verification Tokens -->
+    <meta name="google-site-verification" content="ENTER_YOUR_GOOGLE_SEARCH_CONSOLE_CODE" />
+    <meta name="msvalidate.01" content="ENTER_YOUR_BING_WEBMASTER_CODE" />
+    <meta name="yandex-verification" content="ENTER_YOUR_YANDEX_CODE" />
+
+    <!-- Stylesheets & Favicon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="css/style.css" rel="stylesheet"/>
+    <link rel="shortcut icon" type="image/jpeg" href="image/favicon.jpg">
+
+    <!-- Schema.org Structured Data (JSON-LD) for Google Rich Snippets & Search Graph -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://localhost:8443/#website",
+          "url": "https://localhost:8443/",
+          "name": "LifeFlow Blood Bank Network",
+          "description": "Universal coordinated blood bank network connecting hospitals, donors, and recipients",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://localhost:8443/abs.html?search={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "MedicalOrganization",
+          "@id": "https://localhost:8443/#organization",
+          "name": "LifeFlow Universal Blood Bank Network",
+          "url": "https://localhost:8443/",
+          "logo": "https://localhost:8443/image/hospital.png",
+          "telephone": "1800-BLOOD-HELP",
+          "emergencyService": true,
+          "availableService": {
+            "@type": "MedicalProcedure",
+            "name": "Emergency Blood Group Matching & Unit Dispatch"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+91-9876543210",
+            "contactType": "Emergency Blood Hotline",
+            "availableLanguage": ["English", "Hindi"],
+            "hoursAvailable": "Mo-Su 00:00-24:00"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How can I find available blood in an emergency?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Visit LifeFlow's Available Blood directory (abs.html), select your patient's required blood group and city, and immediately view partner hospitals with certified units in stock. You can submit an urgent requisition online."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Who is eligible to donate blood?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Any healthy adult between the ages of 18 and 65, weighing at least 50 kg, with a hemoglobin count above 12.5 g/dL and no active infections, is eligible to register as a voluntary donor."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Which blood group is considered the universal donor?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "O Negative (O-) red blood cells can be safely transfused to patients of virtually any blood group, making it critical for trauma and emergency surgery care."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Emergency Announcement Top Bar -->
+    <div class="bg-danger text-white py-2 px-3 small font-weight-bold d-flex justify-content-between align-items-center">
+        <span><i class="fas fa-ambulance mr-2"></i><strong>Emergency 24x7 Hotline:</strong> Call 1800-BLOOD-HELP (+91 9876543210) for immediate trauma dispatch</span>
+        <span class="d-none d-md-inline"><i class="fas fa-shield-alt mr-1"></i> Authorized Medical Network</span>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav id="mainNav" class="navbar navbar-expand-sm navbar-light bg-light sticky-top shadow-sm"></nav>
+
+    <!-- Hero Section with Quick Blood Search -->
+    <div class="hero-section py-5 bg-light border-bottom">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7 mb-4 mb-lg-0">
+                    <span class="badge badge-danger px-3 py-2 text-uppercase font-weight-bold mb-3">Live Blood Supply Grid</span>
+                    <h1 class="display-4 font-weight-bold text-dark mb-3">
+                        Connecting Every Drop to Someone in Need.
+                    </h1>
+                    <p class="lead text-muted mb-4">
+                        A real-world coordinated digital network for <strong>Hospitals</strong>, <strong>Voluntary Donors</strong>, and <strong>Recipients</strong>. Instant inventory tracking, emergency requests, and verified blood supplies across cities.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="abs.html" class="btn btn-danger btn-lg font-weight-bold mr-3 mb-2 shadow-sm">
+                            <i class="fas fa-search mr-2"></i>Find Blood Units
+                        </a>
+                        <a href="register.html" class="btn btn-outline-danger btn-lg font-weight-bold mr-3 mb-2">
+                            <i class="fas fa-user-plus mr-2"></i>Register Now
+                        </a>
+                        <a href="login.html" class="btn btn-outline-dark btn-lg font-weight-bold mb-2">
+                            <i class="fas fa-sign-in-alt mr-2"></i>Portal Login
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Instant Search Widget Card -->
+                <div class="col-lg-5">
+                    <div class="card shadow border-0 rounded-lg">
+                        <div class="card-header bg-danger text-white py-3">
+                            <h5 class="mb-0 font-weight-bold"><i class="fas fa-search-location mr-2"></i>Instant Blood Search</h5>
+                            <small>Search across all connected hospitals in real-time</small>
+                        </div>
+                        <div class="card-body p-4">
+                            <form action="abs.html" method="get">
+                                <div class="form-group">
+                                    <label class="font-weight-bold text-muted small">Required Blood Group</label>
+                                    <select name="search" class="form-control form-control-lg" required>
+                                        <option value="" disabled selected>Select Blood Group</option>
+                                        <option value="A+">A+</option>
+                                        <option value="A-">A-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="AB-">AB-</option>
+                                        <option value="O+">O+</option>
+                                        <option value="O-">O-</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label class="font-weight-bold text-muted small">City / Location (Optional)</label>
+                                    <input type="text" name="city" class="form-control form-control-lg" placeholder="e.g. Delhi, Mumbai, Bangalore">
+                                </div>
+                                <button type="submit" class="btn btn-danger btn-block btn-lg font-weight-bold shadow-sm">
+                                    <i class="fas fa-tint mr-1"></i> Check Real-Time Availability
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Network Statistics Counter -->
+    <div class="py-4 bg-white border-bottom">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-3 col-6 mb-3 mb-md-0">
+                    <div class="h2 font-weight-bold text-danger mb-0" id="homeStatUnits">75+</div>
+                    <div class="text-muted small font-weight-bold text-uppercase">Blood Units in Stock</div>
+                </div>
+                <div class="col-md-3 col-6 mb-3 mb-md-0">
+                    <div class="h2 font-weight-bold text-primary mb-0" id="homeStatHospitals">3+</div>
+                    <div class="text-muted small font-weight-bold text-uppercase">Partner Hospitals</div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="h2 font-weight-bold text-success mb-0" id="homeStatDonors">25+</div>
+                    <div class="text-muted small font-weight-bold text-uppercase">Registered Donors</div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="h2 font-weight-bold text-info mb-0">100%</div>
+                    <div class="text-muted small font-weight-bold text-uppercase">Screened &amp; Verified</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container cont py-5">
+        <!-- Message Container -->
+        <div id="message-container"></div>
+
+        <!-- Section: Three User Roles Flow -->
+        <div class="row mb-5 text-center">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <div class="mb-3 text-primary"><i class="fas fa-hospital fa-3x"></i></div>
+                    <h5 class="font-weight-bold">For Hospitals</h5>
+                    <p class="text-muted small">
+                        Manage your hospital's real-time blood inventory, monitor incoming clinical requests, and coordinate emergency transfers with other medical centers.
+                    </p>
+                    <a href="login.html" class="btn btn-outline-primary btn-sm mt-auto font-weight-bold">Hospital Portal</a>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <div class="mb-3 text-danger"><i class="fas fa-user-injured fa-3x"></i></div>
+                    <h5 class="font-weight-bold">For Recipients</h5>
+                    <p class="text-muted small">
+                        Search verified blood inventory by blood group and city. Submit urgency-graded requisitions and track fulfillment in real-time.
+                    </p>
+                    <a href="abs.html" class="btn btn-outline-danger btn-sm mt-auto font-weight-bold">Find Blood Units</a>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <div class="mb-3 text-success"><i class="fas fa-hand-holding-heart fa-3x"></i></div>
+                    <h5 class="font-weight-bold">For Donors &amp; Admin</h5>
+                    <p class="text-muted small">
+                        Voluntary blood donors can register their blood group to save lives during critical shortages. System administrators oversee statewide distribution.
+                    </p>
+                    <a href="login.html" class="btn btn-outline-success btn-sm mt-auto font-weight-bold">Admin Portal</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blood Compatibility Matrix -->
+        <div class="row mb-5">
+            <div class="col-12 text-center mb-4">
+                <h3 class="font-weight-bold text-dark"><i class="fas fa-heartbeat text-danger mr-2"></i>Blood Group Compatibility Guide</h3>
+                <p class="text-muted">Knowing who you can donate to and receive from is crucial for patient safety</p>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm h-100 border-left-danger">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <span class="badge badge-danger px-3 py-1 font-weight-bold" style="font-size:1.1rem;">A+</span>
+                        <small class="text-muted font-weight-bold">Second Most Common</small>
+                    </div>
+                    <div class="card-body">
+                        <div class="small mb-2"><strong>Can Donate To:</strong> <span class="badge badge-light border">A+</span> <span class="badge badge-light border">AB+</span></div>
+                        <div class="small"><strong>Can Receive From:</strong> <span class="badge badge-light border">A+</span> <span class="badge badge-light border">A-</span> <span class="badge badge-light border">O+</span> <span class="badge badge-light border">O-</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm h-100 border-left-danger">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <span class="badge badge-danger px-3 py-1 font-weight-bold" style="font-size:1.1rem;">O+</span>
+                        <small class="text-muted font-weight-bold">Most Demanded</small>
+                    </div>
+                    <div class="card-body">
+                        <div class="small mb-2"><strong>Can Donate To:</strong> <span class="badge badge-light border">O+</span> <span class="badge badge-light border">A+</span> <span class="badge badge-light border">B+</span> <span class="badge badge-light border">AB+</span></div>
+                        <div class="small"><strong>Can Receive From:</strong> <span class="badge badge-light border">O+</span> <span class="badge badge-light border">O-</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm h-100 border-left-danger">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <span class="badge badge-danger px-3 py-1 font-weight-bold" style="font-size:1.1rem;">B+</span>
+                        <small class="text-muted font-weight-bold">High Demand</small>
+                    </div>
+                    <div class="card-body">
+                        <div class="small mb-2"><strong>Can Donate To:</strong> <span class="badge badge-light border">B+</span> <span class="badge badge-light border">AB+</span></div>
+                        <div class="small"><strong>Can Receive From:</strong> <span class="badge badge-light border">B+</span> <span class="badge badge-light border">B-</span> <span class="badge badge-light border">O+</span> <span class="badge badge-light border">O-</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm h-100 border-left-danger">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <span class="badge badge-danger px-3 py-1 font-weight-bold" style="font-size:1.1rem;">AB+</span>
+                        <small class="text-success font-weight-bold">Universal Recipient</small>
+                    </div>
+                    <div class="card-body">
+                        <div class="small mb-2"><strong>Can Donate To:</strong> <span class="badge badge-light border">AB+ only</span></div>
+                        <div class="small"><strong>Can Receive From:</strong> <span class="badge badge-success">Any Blood Group</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm h-100 border-left-primary">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <span class="badge badge-primary px-3 py-1 font-weight-bold" style="font-size:1.1rem;">O-</span>
+                        <small class="text-danger font-weight-bold">Universal Donor</small>
+                    </div>
+                    <div class="card-body">
+                        <div class="small mb-2"><strong>Can Donate To:</strong> <span class="badge badge-danger">Any Blood Group</span></div>
+                        <div class="small"><strong>Can Receive From:</strong> <span class="badge badge-light border">O- only</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm h-100 border-left-primary">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <span class="badge badge-primary px-3 py-1 font-weight-bold" style="font-size:1.1rem;">A-</span>
+                        <small class="text-muted font-weight-bold">Rare Type</small>
+                    </div>
+                    <div class="card-body">
+                        <div class="small mb-2"><strong>Can Donate To:</strong> <span class="badge badge-light border">A-</span> <span class="badge badge-light border">A+</span> <span class="badge badge-light border">AB-</span> <span class="badge badge-light border">AB+</span></div>
+                        <div class="small"><strong>Can Receive From:</strong> <span class="badge badge-light border">A-</span> <span class="badge badge-light border">O-</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm h-100 border-left-primary">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <span class="badge badge-primary px-3 py-1 font-weight-bold" style="font-size:1.1rem;">B-</span>
+                        <small class="text-muted font-weight-bold">Rare Type</small>
+                    </div>
+                    <div class="card-body">
+                        <div class="small mb-2"><strong>Can Donate To:</strong> <span class="badge badge-light border">B-</span> <span class="badge badge-light border">B+</span> <span class="badge badge-light border">AB-</span> <span class="badge badge-light border">AB+</span></div>
+                        <div class="small"><strong>Can Receive From:</strong> <span class="badge badge-light border">B-</span> <span class="badge badge-light border">O-</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm h-100 border-left-primary">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <span class="badge badge-primary px-3 py-1 font-weight-bold" style="font-size:1.1rem;">AB-</span>
+                        <small class="text-muted font-weight-bold">Rarest Type (1%)</small>
+                    </div>
+                    <div class="card-body">
+                        <div class="small mb-2"><strong>Can Donate To:</strong> <span class="badge badge-light border">AB-</span> <span class="badge badge-light border">AB+</span></div>
+                        <div class="small"><strong>Can Receive From:</strong> <span class="badge badge-light border">All Negative Groups</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Donor Eligibility & Process Guide -->
+        <div class="row mb-5">
+            <div class="col-lg-6 mb-4">
+                <div class="card shadow-sm h-100 border-0">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 font-weight-bold text-dark"><i class="fas fa-check-circle text-success mr-2"></i>Who Can Donate Blood?</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-3 d-flex align-items-start">
+                                <i class="fas fa-check text-success mt-1 mr-3"></i>
+                                <div><strong>Age Requirement:</strong> Between 18 and 65 years old.</div>
+                            </li>
+                            <li class="mb-3 d-flex align-items-start">
+                                <i class="fas fa-check text-success mt-1 mr-3"></i>
+                                <div><strong>Weight:</strong> At least 50 kg (110 lbs) with good overall health.</div>
+                            </li>
+                            <li class="mb-3 d-flex align-items-start">
+                                <i class="fas fa-check text-success mt-1 mr-3"></i>
+                                <div><strong>Donation Interval:</strong> At least 84 days (3 months) since your last whole blood donation.</div>
+                            </li>
+                            <li class="mb-3 d-flex align-items-start">
+                                <i class="fas fa-check text-success mt-1 mr-3"></i>
+                                <div><strong>Hemoglobin Level:</strong> Minimum 12.5 g/dL measured before donation.</div>
+                            </li>
+                            <li class="d-flex align-items-start">
+                                <i class="fas fa-check text-success mt-1 mr-3"></i>
+                                <div><strong>Hydration &amp; Rest:</strong> Drink plenty of fluids and have a healthy meal before donating.</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+                <div class="card shadow-sm h-100 border-0">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 font-weight-bold text-dark"><i class="fas fa-notes-medical text-primary mr-2"></i>The 4-Step Donation Process</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="media mb-3">
+                            <span class="badge badge-primary rounded-circle p-2 mr-3 font-weight-bold" style="width:32px;height:32px;">1</span>
+                            <div class="media-body">
+                                <h6 class="font-weight-bold mb-1">Registration &amp; Verification</h6>
+                                <p class="text-muted small mb-0">Present your ID, confirm contact details, and review health history questionnaire.</p>
+                            </div>
+                        </div>
+                        <div class="media mb-3">
+                            <span class="badge badge-primary rounded-circle p-2 mr-3 font-weight-bold" style="width:32px;height:32px;">2</span>
+                            <div class="media-body">
+                                <h6 class="font-weight-bold mb-1">Mini-Health Checkup</h6>
+                                <p class="text-muted small mb-0">A quick check of your temperature, pulse, blood pressure, and hemoglobin levels.</p>
+                            </div>
+                        </div>
+                        <div class="media mb-3">
+                            <span class="badge badge-primary rounded-circle p-2 mr-3 font-weight-bold" style="width:32px;height:32px;">3</span>
+                            <div class="media-body">
+                                <h6 class="font-weight-bold mb-1">The Donation (8-10 mins)</h6>
+                                <p class="text-muted small mb-0">Relax comfortably while sterile equipment collects approximately one pint of blood.</p>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <span class="badge badge-primary rounded-circle p-2 mr-3 font-weight-bold" style="width:32px;height:32px;">4</span>
+                            <div class="media-body">
+                                <h6 class="font-weight-bold mb-1">Refreshment &amp; Recovery</h6>
+                                <p class="text-muted small mb-0">Enjoy complimentary snacks and juices for 15 minutes before leaving as a lifesaver!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center bg-white border-top py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-md-left mb-2 mb-md-0">
+                    <span class="brand text-danger font-weight-bold h5 mb-0">LifeFlow Blood Bank System</span>
+                    <div class="text-muted small">Universal Coordinated Healthcare Network &bull; Runs on Any Device</div>
+                </div>
+                <div class="col-md-6 text-md-right small text-muted">
+                    © Copyright <span id="yearSpan"></span> All Rights Reserved. &bull; <a href="login.html" class="text-danger">Admin Portal</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+    <script src="js/security.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        BloodBank.initNavbar('home');
+        BloodBank.initMessages();
+        BloodBank.initFooter();
+
+        // Load Live Stats
+        const stats = BloodBank.getStats();
+        document.getElementById('homeStatUnits').textContent = stats.totalBloodUnits + '+';
+        document.getElementById('homeStatHospitals').textContent = stats.hospitalsCount + '+';
+        document.getElementById('homeStatDonors').textContent = stats.donorsCount + '+';
+    </script>
+</body>
+</html>

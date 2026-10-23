@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <!-- SEO Meta Tags -->
+    <title>Portal Sign In | LifeFlow Blood Bank Network</title>
+    <meta name="description" content="Secure login portal for partner hospitals, recipients, and system administrators." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://localhost:8443/login.html" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="css/style.css" rel="stylesheet"/>
+    <link rel="shortcut icon" type="image/jpeg" href="image/favicon.jpg">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav id="mainNav" class="navbar navbar-expand-sm navbar-light bg-light sticky-top"></nav>
+
+    <div class="container cont">
+        <!-- Message Container -->
+        <div id="message-container"></div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-6 col-sm-8 mb-5">
+                <div class="card rounded">
+                    <ul class="nav nav-tabs justify-content-center bg-light" style="padding: 15px 10px 0 10px;">
+                        <li class="nav-item">
+                            <a class="nav-link active font-weight-bold" data-toggle="tab" href="#hospitals">Hospitals</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold" data-toggle="tab" href="#receivers">Receivers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold text-danger" data-toggle="tab" href="#admin">
+                                <i class="fas fa-shield-alt mr-1"></i> Admin
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content p-4">
+                        <!-- Hospital Login Pane -->
+                        <div class="tab-pane container active" id="hospitals">
+                            <form id="hospitalLoginForm">
+                                <label class="text-muted font-weight-bold">Hospital Email</label>
+                                <input type="email" id="hemail" name="hemail" placeholder="Hospital Email" class="form-control mb-3" required>
+                                <label class="text-muted font-weight-bold">Hospital Password</label>
+                                <input type="password" id="hpassword" name="hpassword" placeholder="Hospital Password" class="form-control mb-3" required>
+                                <button type="submit" class="btn btn-primary btn-block mb-3">Login as Hospital</button>
+                            </form>
+                        </div>
+
+                        <!-- Receiver Login Pane -->
+                        <div class="tab-pane container fade" id="receivers">
+                            <form id="receiverLoginForm">
+                                <label class="text-muted font-weight-bold">Receiver Email</label>
+                                <input type="email" id="remail" name="remail" placeholder="Receiver Email" class="form-control mb-3" required>
+                                <label class="text-muted font-weight-bold">Receiver Password</label>
+                                <input type="password" id="rpassword" name="rpassword" placeholder="Receiver Password" class="form-control mb-3" required>
+                                <button type="submit" class="btn btn-primary btn-block mb-3">Login as Receiver</button>
+                            </form>
+                        </div>
+
+                        <!-- Admin Login Pane -->
+                        <div class="tab-pane container fade" id="admin">
+                            <form id="adminLoginForm">
+                                <label class="text-muted font-weight-bold">Admin Email</label>
+                                <input type="email" id="aemail" name="aemail" placeholder="Administrator Email" class="form-control mb-3" required>
+                                <label class="text-muted font-weight-bold">Admin Password</label>
+                                <input type="password" id="apassword" name="apassword" placeholder="Administrator Password" class="form-control mb-3" required>
+                                <button type="submit" class="btn btn-danger btn-block mb-3">Login as Administrator</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="text-center pb-4">
+                        <a href="register.html" class="text-info font-weight-bold" title="Click here to register">Don't have an account? Register here</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center bg-light">
+        © Copyright <span id="yearSpan"></span> <span class="brand">Blood Bank. </span> All Rights Reserved.
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+    <script src="js/security.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Check if already logged in
+        const currentSession = BloodBank.getSession();
+        if (currentSession) {
+            if (currentSession.type === 'admin') {
+                window.location.href = 'admin.html';
+            } else if (currentSession.type === 'hospital') {
+                window.location.href = 'bloodrequest.html';
+            } else if (currentSession.type === 'receiver') {
+                window.location.href = 'sentrequest.html';
+            }
+        }
+
+        BloodBank.initNavbar('login');
+        BloodBank.initMessages();
+        BloodBank.initFooter();
+
+        // Admin Login Handler
+        document.getElementById('adminLoginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const email = document.getElementById('aemail').value.trim();
+            const password = document.getElementById('apassword').value;
+
+            // Background Brute-Force Rate Limit Check
+            const attemptCheck = CyberSecurity.checkLoginAttempt(email);
+            if (!attemptCheck.allowed) {
+                BloodBank.showBanner(attemptCheck.message, true);
+                return;
+            }
+
+            const db = BloodBank.getDB();
+            const admin = db.admin || { email: 'admin@bloodbank.com', password: 'admin', name: 'System Administrator' };
+
+            const isMatch = (email.toLowerCase() === admin.email.toLowerCase()) && (await CyberSecurity.verifyPassword(password, admin.password));
+
+            if (isMatch) {
+                CyberSecurity.recordSuccessfulLogin(email, 'Administrator');
+                BloodBank.setSession({
+                    type: 'admin',
+                    name: admin.name || 'System Administrator',
+                    email: admin.email,
+                    sessionToken: CyberSecurity.generateSecureToken(),
+                    lastActive: Date.now()
+                });
+                window.location.href = 'admin.html?msg=' + encodeURIComponent('Authenticated securely as Administrator.');
+            } else {
+                const failRecord = CyberSecurity.recordFailedLogin(email);
+                const settings = CyberSecurity.getSettings();
+                const remaining = Math.max(0, settings.maxFailedAttempts - failRecord.count);
+                if (failRecord.lockedUntil) {
+                    BloodBank.showBanner(`Security Alert: Account locked for ${settings.lockoutDurationMinutes} minutes due to excessive failed attempts.`, true);
+                } else {
+                    BloodBank.showBanner(`Invalid credentials. ${remaining} attempt(s) remaining before security lockout.`, true);
+                }
+            }
+        });
+
+        // Hospital Login Handler
+        document.getElementById('hospitalLoginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const email = document.getElementById('hemail').value.trim();
+            const password = document.getElementById('hpassword').value;
+
+            // Background Brute-Force Rate Limit Check
+            const attemptCheck = CyberSecurity.checkLoginAttempt(email);
+            if (!attemptCheck.allowed) {
+                BloodBank.showBanner(attemptCheck.message, true);
+                return;
+            }
+
+            const db = BloodBank.getDB();
+            const hospital = db.hospitals.find(h => h.hemail.toLowerCase() === email.toLowerCase());
+
+            if (hospital && (await CyberSecurity.verifyPassword(password, hospital.hpassword))) {
+                CyberSecurity.recordSuccessfulLogin(email, 'Hospital');
+                BloodBank.setSession({
+                    type: 'hospital',
+                    id: hospital.id,
+                    name: hospital.hname,
+                    email: hospital.hemail,
+                    sessionToken: CyberSecurity.generateSecureToken(),
+                    lastActive: Date.now()
+                });
+                window.location.href = 'bloodrequest.html?msg=' + encodeURIComponent(hospital.hname + ' have logged in securely.');
+            } else {
+                const failRecord = CyberSecurity.recordFailedLogin(email);
+                const settings = CyberSecurity.getSettings();
+                const remaining = Math.max(0, settings.maxFailedAttempts - failRecord.count);
+                if (failRecord.lockedUntil) {
+                    BloodBank.showBanner(`Security Alert: Account locked for ${settings.lockoutDurationMinutes} minutes due to excessive failed attempts.`, true);
+                } else {
+                    BloodBank.showBanner(`Wrong email or password. ${remaining} attempt(s) remaining before security lockout.`, true);
+                }
+            }
+        });
+
+        // Receiver Login Handler
+        document.getElementById('receiverLoginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const email = document.getElementById('remail').value.trim();
+            const password = document.getElementById('rpassword').value;
+
+            // Background Brute-Force Rate Limit Check
+            const attemptCheck = CyberSecurity.checkLoginAttempt(email);
+            if (!attemptCheck.allowed) {
+                BloodBank.showBanner(attemptCheck.message, true);
+                return;
+            }
+
+            const db = BloodBank.getDB();
+            const receiver = db.receivers.find(r => r.remail.toLowerCase() === email.toLowerCase());
+
+            if (receiver && (await CyberSecurity.verifyPassword(password, receiver.rpassword))) {
+                CyberSecurity.recordSuccessfulLogin(email, 'Recipient');
+                BloodBank.setSession({
+                    type: 'receiver',
+                    id: receiver.id,
+                    name: receiver.rname,
+                    email: receiver.remail,
+                    sessionToken: CyberSecurity.generateSecureToken(),
+                    lastActive: Date.now()
+                });
+                window.location.href = 'sentrequest.html?msg=' + encodeURIComponent(receiver.rname + ' have logged in securely.');
+            } else {
+                const failRecord = CyberSecurity.recordFailedLogin(email);
+                const settings = CyberSecurity.getSettings();
+                const remaining = Math.max(0, settings.maxFailedAttempts - failRecord.count);
+                if (failRecord.lockedUntil) {
+                    BloodBank.showBanner(`Security Alert: Account locked for ${settings.lockoutDurationMinutes} minutes due to excessive failed attempts.`, true);
+                } else {
+                    BloodBank.showBanner(`Wrong email or password. ${remaining} attempt(s) remaining before security lockout.`, true);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

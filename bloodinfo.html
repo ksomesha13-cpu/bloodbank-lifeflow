@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bloodbank | Hospital Blood Inventory</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="css/style.css" rel="stylesheet"/>
+    <link rel="shortcut icon" type="image/jpeg" href="image/favicon.jpg">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav id="mainNav" class="navbar navbar-expand-sm navbar-light bg-light sticky-top shadow-sm"></nav>
+
+    <div class="container cont">
+        <!-- Message Container -->
+        <div id="message-container"></div>
+
+        <div class="row justify-content-center">
+            <!-- Add Blood Sample Form -->
+            <div class="col-lg-5 col-md-6 col-sm-12 mb-5">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 font-weight-bold text-dark"><i class="fas fa-plus-circle text-danger mr-2"></i>Add Blood Group to Hospital Stock</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="addBloodForm">
+                            <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" class="text-primary font-weight-bold" title="click to see">
+                                Standard Collection Guidelines <i class="fas fa-chevron-down small"></i>
+                            </a>
+                            <div class="collapse my-2 p-2 border rounded bg-light small" id="collapseExample">
+                                Blood samples must be verified and screened by authorized phlebotomists and medical technicians. Ensure bags are labeled with batch numbers and stored in certified blood bank refrigeration (2°C - 6°C) before listing units on the portal.
+                            </div>
+                            <br><br>
+                            <div class="form-check mb-3">
+                                <input type="checkbox" id="condition" class="form-check-input" required checked>
+                                <label class="form-check-label font-weight-bold small" for="condition">I certify these units are screened and tested</label>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="font-weight-bold small text-muted">Blood Group *</label>
+                                <select class="form-control" id="bgSelect" required>
+                                    <option value="" disabled selected>Select Blood Group</option>
+                                    <option value="A-">A-</option>
+                                    <option value="A+">A+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="O-">O-</option>
+                                    <option value="O+">O+</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="font-weight-bold small text-muted">Initial Quantity (Units / Bags) *</label>
+                                <input type="number" id="unitsInput" class="form-control" min="1" max="100" value="5" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block mb-3 font-weight-bold">
+                                <i class="fas fa-save mr-1"></i> Add to Inventory
+                            </button>
+                            <a href="index.html" class="float-right text-muted small" title="click here">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Existing Samples in this Hospital -->
+            <div class="col-lg-7 col-md-6 col-sm-12 mb-5">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 font-weight-bold text-dark"><i class="fas fa-cubes text-info mr-2"></i>Current Hospital Blood Stock</h5>
+                        <span class="badge badge-primary" id="totalStockBadge">0 Total Units</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="noInventoryAlert" class="p-4 text-center" style="display: none;">
+                            <div class="text-muted">No blood groups currently in your hospital's stock. Use the form to add items.</div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped mb-0 text-center">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Blood Group</th>
+                                        <th>In Stock</th>
+                                        <th>Adjust Stock</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="inventoryTableBody">
+                                    <!-- Dynamically populated -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center bg-light">
+        © Copyright <span id="yearSpan"></span> <span class="brand text-danger font-weight-bold">LifeFlow Blood Bank. </span> All Rights Reserved.
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+    <script src="js/security.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Guard: Hospital access only
+        const session = BloodBank.getSession();
+        if (!session || session.type !== 'hospital') {
+            alert('Please login as a Hospital to access this page.');
+            window.location.href = 'login.html';
+        }
+
+        BloodBank.initNavbar('bloodinfo');
+        BloodBank.initMessages();
+        BloodBank.initFooter();
+
+        function renderInventory() {
+            const db = BloodBank.getDB();
+            const samples = db.bloodinfo.filter(item => item.hid === session.id);
+            const tbody = document.getElementById('inventoryTableBody');
+            const noAlert = document.getElementById('noInventoryAlert');
+            const totalBadge = document.getElementById('totalStockBadge');
+
+            const totalUnits = samples.reduce((acc, curr) => acc + (parseInt(curr.units) || 0), 0);
+            totalBadge.textContent = totalUnits + ' Total Units';
+
+            if (samples.length === 0) {
+                tbody.innerHTML = '';
+                noAlert.style.display = 'block';
+                return;
+            }
+
+            noAlert.style.display = 'none';
+            tbody.innerHTML = samples.map((item, index) => {
+                const units = parseInt(item.units) || 0;
+                const statusColor = units > 8 ? 'badge-success' : units > 2 ? 'badge-primary' : 'badge-warning';
+
+                return `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><span class="badge badge-danger px-3 py-1 font-weight-bold" style="font-size: 1rem;">${BloodBank.escapeHtml(item.bg)}</span></td>
+                        <td><span class="badge ${statusColor} px-2 py-1 font-weight-bold">${units} Bags</span></td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-secondary" onclick="adjustUnits(${item.bid}, -1)" title="Decrease Stock by 1">-</button>
+                                <button class="btn btn-outline-secondary" onclick="adjustUnits(${item.bid}, 1)" title="Increase Stock by 1">+</button>
+                            </div>
+                        </td>
+                        <td>
+                            <button class="btn btn-outline-danger btn-sm" onclick="deleteSample(${item.bid})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function adjustUnits(bid, delta) {
+            const db = BloodBank.getDB();
+            const item = db.bloodinfo.find(b => b.bid === bid);
+            if (item) {
+                const current = parseInt(item.units) || 0;
+                const updated = Math.max(0, current + delta);
+                item.units = updated;
+                item.lastUpdated = new Date().toISOString().slice(0, 10);
+                BloodBank.saveDB(db);
+                renderInventory();
+            }
+        }
+
+        function deleteSample(bid) {
+            if (!confirm('Are you sure you want to remove this blood group from inventory?')) return;
+            const db = BloodBank.getDB();
+            db.bloodinfo = db.bloodinfo.filter(item => item.bid !== bid);
+            BloodBank.saveDB(db);
+            BloodBank.showBanner("Blood sample removed from inventory.");
+            renderInventory();
+        }
+
+        document.getElementById('addBloodForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const bg = document.getElementById('bgSelect').value;
+            const units = parseInt(document.getElementById('unitsInput').value) || 1;
+
+            if (!bg) {
+                BloodBank.showBanner("Please select a blood group.", true);
+                return;
+            }
+
+            const db = BloodBank.getDB();
+            // Check if blood group already exists for this hospital
+            const existing = db.bloodinfo.find(b => b.hid === session.id && b.bg === bg);
+            if (existing) {
+                existing.units = (parseInt(existing.units) || 0) + units;
+                existing.lastUpdated = new Date().toISOString().slice(0, 10);
+                BloodBank.showBanner("Added " + units + " additional units to existing " + bg + " stock.");
+            } else {
+                const newBid = db.bloodinfo.length > 0 ? Math.max(...db.bloodinfo.map(b => b.bid)) + 1 : 1;
+                db.bloodinfo.push({
+                    bid: newBid,
+                    hid: session.id,
+                    bg: bg,
+                    units: units,
+                    lastUpdated: new Date().toISOString().slice(0, 10)
+                });
+                BloodBank.showBanner("Blood group " + bg + " (" + units + " units) added successfully!");
+            }
+
+            BloodBank.saveDB(db);
+            document.getElementById('addBloodForm').reset();
+            document.getElementById('condition').checked = true;
+            document.getElementById('unitsInput').value = '5';
+            renderInventory();
+        });
+
+        renderInventory();
+    </script>
+</body>
+</html>
